@@ -1,75 +1,76 @@
 import React from 'react';
+import { resolveLogoAsset } from '../logoAssets';
 
 const sponsors = [
   { 
     name: 'AWS', 
     url: 'https://aws.amazon.com', 
-    logo: 'Images/logoer/aws.png' 
+    logoFile: 'aws.png' 
   },
   { 
     name: 'Appear', 
     url: 'https://appear.net', 
-    logo: 'Images/logoer/appear.png' 
+    logoFile: 'appear.png' 
   },
   { 
     name: 'Sony', 
     url: 'https://pro.sony', 
-    logo: 'Images/testsony.png' 
+    logoFile: 'testsony.png' 
   },
   { 
     name: 'Grass Valley', 
     url: 'https://grassvalley.com', 
-    logo: 'Images/logoer/gv.png' 
+    logoFile: 'gv.png' 
   },
   { 
     name: 'Danmon Systems Group', 
     url: 'https://danmon.com', 
-    logo: 'Images/logoer/danmon.png' 
+    logoFile: 'danmon.png' 
   },
   { 
     name: 'Fonn Group', 
     url: 'https://fonngroup.com', 
-    logo: 'Images/logoer/fonn.png' 
+    logoFile: 'fonn.png' 
   },
   { 
     name: 'Everviz', 
     url: 'https://Everviz.com', 
-    logo: 'Images/logoer/everviz.png' 
+    logoFile: 'everviz.png' 
   },
   { 
     name: 'Google News Initiative', 
     url: 'https://newsinitiative.withgoogle.com', 
-    logo: 'Images/logoer/google.png' 
+    logoFile: 'google.png' 
   },
   { 
     name: 'Vizrt', 
     url: 'https://vizrt.com', 
-    logo: 'Images/logoer/vz.png' 
+    logoFile: 'vz.png' 
   },
   { 
     name: 'Media Tailor', 
     url: 'https://MediaTailor.fi', 
-    logo: 'Images/logoer/mediatailor.png' 
+    logoFile: 'mediatailor.png' 
   },
   { 
     name: 'LAWO', 
     url: 'https://LAWO.com', 
-    logo: 'Images/logoer/LAWO.svg' 
+    logoFile: 'LAWO.svg' 
   },
   { 
     name: 'Mediability', 
     url: 'https://Mediability.com', 
-    logo: 'Images/logoer/mediability.png' 
+    logoFile: 'mediability.png' 
   },
   { 
     name: 'TV2 Danmark', 
     url: 'https://TV2.dk', 
-    logo: 'Images/logoer/TV2Denmark.svg' 
+    logoFile: 'TV2Denmark.svg' 
   },
   { 
     name: 'JFM', 
     url: 'https://JFM.dk', 
-    logo: 'Images/logoer/jfm.png' 
+    logoFile: 'jfm.png' 
   },
 
 ];
@@ -92,7 +93,7 @@ const SponsorFooter: React.FC = () => {
             aria-label={sponsor.name}
           >
               <img 
-                src={sponsor.logo} 
+                src={resolveLogoAsset(sponsor.logoFile)} 
                 alt={sponsor.name} 
                 className="h-auto max-h-[100px] max-w-[100px] w-auto object-contain"
                 onError={(e) => {

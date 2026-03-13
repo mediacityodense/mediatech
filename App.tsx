@@ -10,10 +10,12 @@ import SponsorFooter from './components/SponsorFooter';
 import NewsletterSignup from './components/NewsletterSignup';
 import UpNextDashboard from './components/UpNextDashboard';
 import DigitalBadge from './components/DigitalBadge';
+import { resolveLogoAsset } from './logoAssets';
 import { FilterType, Speaker } from './types';
 import { Calendar, Info, Heart, List, Users, LayoutDashboard, QrCode } from 'lucide-react';
 
 const App: React.FC = () => {
+  const mcoLogo = resolveLogoAsset('mco1.png');
   const [activeDayIndex, setActiveDayIndex] = useState<number>(() => {
     const savedDayDate = localStorage.getItem('mco_active_day_date');
     const savedDayIndex = SCHEDULE_DATA.findIndex(day => day.date === savedDayDate);
@@ -136,11 +138,10 @@ const App: React.FC = () => {
         <div className="px-4 py-3 flex justify-between items-center">
             <div className="flex items-center gap-3">
                 <img 
-                  src="Images/logoer/mco1.png" 
-                  alt="Images/logoer/mco1.png" 
+                  src={mcoLogo}
+                  alt="Media City Odense"
                   className="h-14 w-auto object-contain"
                   onError={(e) => {
-                    // Fallback in case clearbit fails, just hide or show placeholder
                     e.currentTarget.style.display = 'none';
                   }}
                 />

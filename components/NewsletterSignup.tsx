@@ -1,8 +1,11 @@
 
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { resolveLogoAsset } from '../logoAssets';
 
 const NewsletterSignup: React.FC = () => {
+  const mcoLogo = resolveLogoAsset('mco1.png');
+
   return (
     <div className="mx-4 mb-8 p-6 bg-gradient-to-br from-mco-purple/10 to-transparent rounded-2xl border border-mco-purple/20 flex flex-col items-center text-center relative overflow-hidden">
       
@@ -10,7 +13,7 @@ const NewsletterSignup: React.FC = () => {
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-mco-purple/10 rounded-full blur-3xl pointer-events-none"></div>
       
       <img 
-        src="Images/logoer/mco1.png" 
+        src={mcoLogo}
         alt="Media City Odense" 
         className="w-20 h-20 object-contain"
         onError={(e) => {
