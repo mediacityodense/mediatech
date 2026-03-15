@@ -437,6 +437,7 @@ export const SCHEDULE_DATA: DaySchedule[] = [
         endTime: '24:00',
         title: 'Networking @ Ryans Irish Pub',
         track: 'Social',
+        description: 'Free bar and light food sponsored by TV 2 Denmark & JFM. Please show your Mediatech Festival ticket for entry',
         location: 'Ryans Irish Pub, Fisketorvet 12, 5000 Odense'
       },
                 {
