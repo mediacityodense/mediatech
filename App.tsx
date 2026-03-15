@@ -135,44 +135,53 @@ const App: React.FC = () => {
       
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md z-30 border-b border-gray-200 shrink-0">
-        <div className="px-4 py-3 flex justify-between items-center">
-            <div className="flex items-center gap-3">
+        <div className="px-4 py-2.5 flex justify-between items-center">
+            <div className="flex items-center gap-2.5">
                 <img 
                   src={mcoLogo}
                   alt="Media City Odense"
-                  className="h-14 w-auto object-contain"
+                  className="h-11 w-auto object-contain"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}
                 />
-                <div>
-                    <h1 className="text-sm font-bold text-gray-900 leading-tight">Mediatech Festival 2026 @ G.A.S.A.</h1>
-                    <p className="text-xs text-gray-500">Media City Odense</p>
+                <div className="min-w-0">
+                    <h1 className="text-[15px] font-bold leading-tight tracking-[-0.01em] text-gray-900">
+                      Mediatech Festival 2026
+                    </h1>
+                    <div className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-[11px] leading-tight">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+                        Venue
+                      </span>
+                      <span className="font-semibold text-gray-900">G.A.S.A.</span>
+                      <span className="text-gray-300"> </span>
+                      <span className="font-medium text-gray-500">Media City Odense</span>
+                    </div>
                 </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
                 {currentView === 'program' && (
                     <button 
                         onClick={() => setShowDashboard(!showDashboard)}
-                        className={`p-2 rounded-full transition-colors ${showDashboard ? 'bg-purple-50 text-mco-purple' : 'text-gray-400 hover:bg-gray-100'}`}
+                        className={`p-1.5 rounded-full transition-colors ${showDashboard ? 'bg-purple-50 text-mco-purple' : 'text-gray-400 hover:bg-gray-100'}`}
                         aria-label="Toggle Dashboard"
                     >
-                        <LayoutDashboard size={20} />
+                        <LayoutDashboard size={19} />
                     </button>
                 )}
                 <button 
                   onClick={() => setShowBadge(true)}
-                  className="p-2 text-mco-purple hover:bg-purple-50 rounded-full transition-colors"
+                  className="p-1.5 text-mco-purple hover:bg-purple-50 rounded-full transition-colors"
                   aria-label="My Badge"
                 >
-                    <QrCode size={24} />
+                    <QrCode size={22} />
                 </button>
                 <button 
                   onClick={() => setShowInfo(!showInfo)}
-                  className="p-2 text-mco-purple hover:bg-purple-50 rounded-full transition-colors"
+                  className="p-1.5 text-mco-purple hover:bg-purple-50 rounded-full transition-colors"
                   aria-label="App Info"
                 >
-                    <Info size={24} />
+                    <Info size={22} />
                 </button>
             </div>
         </div>

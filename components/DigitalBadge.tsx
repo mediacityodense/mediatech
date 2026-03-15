@@ -14,18 +14,26 @@ interface DigitalBadgeProps {
   onClose: () => void;
 }
 
-const DigitalBadge: React.FC<DigitalBadgeProps> = ({ onClose }) => {
-  const [profile, setProfile] = useState<UserProfile>(() => {
+const emptyProfile: UserProfile = {
+  name: '',
+  role: '',
+  company: '',
+  email: '',
+  linkedin: ''
+};
+
+const getSavedProfile = (): UserProfile => {
+  try {
     const savedProfile = localStorage.getItem('mco_delegate_profile');
-    return savedProfile ? JSON.parse(savedProfile) : {
-      name: '',
-      role: '',
-      company: '',
-      email: '',
-      linkedin: ''
-    };
-  });
-  const [isEditing, setIsEditing] = useState(true);
+    return savedProfile ? { ...emptyProfile, ...JSON.parse(savedProfile) } : emptyProfile;
+  } catch {
+    return emptyProfile;
+  }
+};
+
+const DigitalBadge: React.FC<DigitalBadgeProps> = ({ onClose }) => {
+  const [profile, setProfile] = useState<UserProfile>(getSavedProfile);
+  const [isEditing, setIsEditing] = useState(() => !getSavedProfile().name.trim());
 
 
 
