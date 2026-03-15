@@ -78,7 +78,7 @@ const SpeakerProfile: React.FC<SpeakerProfileProps> = ({ speaker, scheduleData, 
         <div className="flex flex-col items-center text-center mb-8">
           <div className="relative group mb-4">
              {/* Main Avatar Container */}
-             <div className="w-32 h-32 rounded-full bg-white border-4 border-white shadow-xl flex items-center justify-center text-gray-300 overflow-hidden relative z-10 animate-in zoom-in-50 duration-500">
+             <div className="w-32 h-32 z-1 rounded-full bg-white border-4 border-white shadow-xl flex items-center justify-center text-gray-300 overflow-hidden relative animate-in zoom-in-50 duration-500">
                  {!imgError && speaker.image ? (
                     <>
                         {/* Placeholder/Loading Skeleton */}
