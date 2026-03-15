@@ -137,14 +137,22 @@ const App: React.FC = () => {
       <header className="bg-white/80 backdrop-blur-md z-30 border-b border-gray-200 shrink-0">
         <div className="px-4 py-2.5 flex justify-between items-center">
             <div className="flex items-center gap-2.5">
-                <img 
-                  src={mcoLogo}
-                  alt="Media City Odense"
-                  className="h-11 w-auto object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
+                <a
+                  href="https://www.mediacityodense.dk/mediatech-festival-26/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open Mediatech Festival website"
+                  className="shrink-0"
+                >
+                  <img 
+                    src={mcoLogo}
+                    alt="Media City Odense"
+                    className="h-11 w-auto object-contain"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </a>
                 <div className="min-w-0">
                     <h1 className="text-[15px] font-bold leading-tight tracking-[-0.01em] text-gray-900">
                       Mediatech Festival 2026
