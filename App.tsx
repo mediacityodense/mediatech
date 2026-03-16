@@ -12,10 +12,11 @@ import UpNextDashboard from './components/UpNextDashboard';
 import DigitalBadge from './components/DigitalBadge';
 import { resolveLogoAsset } from './logoAssets';
 import { FilterType, Speaker } from './types';
-import { Calendar, Info, Heart, List, Users, LayoutDashboard, QrCode } from 'lucide-react';
+import { Calendar, Info, Heart, List, Users, LayoutDashboard, QrCode, MapPin, ExternalLink, X } from 'lucide-react';
 
 const App: React.FC = () => {
   const mcoLogo = resolveLogoAsset('mco1.png');
+  const venueMapUrl = 'https://www.google.com/maps/search/?api=1&query=Middelfartvej+9M%2C+5000+Odense';
   const [activeDayIndex, setActiveDayIndex] = useState<number>(() => {
     const savedDayDate = localStorage.getItem('mco_active_day_date');
     const savedDayIndex = SCHEDULE_DATA.findIndex(day => day.date === savedDayDate);
@@ -232,25 +233,85 @@ const App: React.FC = () => {
 
       {/* Info Modal/Overlay */}
       {showInfo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/40 backdrop-blur-sm" onClick={() => setShowInfo(false)}>
-            <div className="bg-white p-6 rounded-2xl shadow-2xl max-w-xs w-full animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
-                <h2 className="text-xl font-bold mb-2 text-mco-purple">About</h2>
-                <p className="text-gray-600 text-sm mb-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/45 backdrop-blur-md" onClick={() => setShowInfo(false)}>
+            <div className="max-w-sm w-full overflow-hidden rounded-[30px] border border-white/70 bg-white/95 shadow-[0_28px_80px_-28px_rgba(15,23,42,0.45)] ring-1 ring-black/5 animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
+                <div className="relative overflow-hidden border-b border-gray-100/80 bg-[linear-gradient(180deg,rgba(248,245,255,0.95)_0%,rgba(255,255,255,0.92)_100%)] px-5 pb-4 pt-4">
+                    <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-gray-200" />
+                    <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-mco-purple/10 blur-2xl" />
+                    <div className="absolute left-0 top-0 h-20 w-28 bg-gradient-to-br from-mco-purple/8 to-transparent blur-2xl" />
+                    <div className="relative flex items-start justify-between gap-3">
+                        <div>
+                            <div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-mco-purple/60">
+                                Mediatech Festival
+                            </div>
+                            <h2 className="text-xl font-bold text-mco-purple">About</h2>
+                        </div>
+                        <button
+                            onClick={() => setShowInfo(false)}
+                            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm ring-1 ring-gray-200/80 transition-colors hover:bg-white hover:text-gray-700"
+                            aria-label="Close"
+                        >
+                            <X size={18} />
+                        </button>
+                    </div>
+                </div>
+                <div className="px-5 pb-5 pt-4">
+                <a
+                    href={venueMapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative mb-4 block overflow-hidden rounded-[22px] bg-gradient-to-br from-violet-700 via-mco-purple to-indigo-500 p-px text-left shadow-[0_18px_40px_-24px_rgba(109,40,217,0.5)] transition-all hover:-translate-y-0.5 hover:shadow-[0_22px_48px_-24px_rgba(109,40,217,0.58)]"
+                >
+                    <span className="absolute inset-0 opacity-90 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.24),_transparent_38%),linear-gradient(135deg,_#7C3AED_0%,_#6D28D9_48%,_#4338CA_100%)]" />
+                    <span className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-white/12 blur-2xl" />
+                    <span className="absolute bottom-0 left-0 h-16 w-24 bg-gradient-to-tr from-white/12 to-transparent blur-2xl" />
+                    <span className="relative block rounded-[21px] px-3.5 py-3.5 text-white">
+                        <span className="flex items-start justify-between gap-3">
+                            <span className="flex items-start gap-3 min-w-0">
+                                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[18px] bg-white/14 text-white ring-1 ring-white/20 backdrop-blur-sm">
+                                    <MapPin size={18} />
+                                </span>
+                                <span className="min-w-0 pt-0.5">
+                                    <span className="inline-flex items-center rounded-full bg-white/14 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/80 ring-1 ring-white/15">
+                                        Venue location
+                                    </span>
+                                    <span className="mt-1.5 block text-[17px] font-semibold leading-tight tracking-[-0.02em] text-white">
+                                        Middelfartvej 9M
+                                    </span>
+                                    <span className="mt-0.5 block text-[13px] text-white/78">
+                                        5000 Odense, Denmark
+                                    </span>
+                                </span>
+                            </span>
+                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/14 text-white ring-1 ring-white/20 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                                <ExternalLink size={14} />
+                            </span>
+                        </span>
+                        <span className="mt-3 block text-[11px] font-medium text-white/78">
+                            Tap for directions
+                        </span>
+                    </span>
+                </a>
+                <div className="rounded-[22px] border border-gray-100 bg-[linear-gradient(180deg,#FFFFFF_0%,#F8FAFC_100%)] p-4 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.28)]">
+                <p className="text-gray-600 text-sm leading-relaxed mb-0">
                     Official schedule app for Mediatech Festival 2026.
                     <br/><br/>
                     <strong>Media City Odense</strong><br/>
                     March 25-26, 2026<br/>
                     Odense, Denmark
                 </p>
-                <div className="text-xs text-gray-400 border-t mt-4 pt-4">
+                </div>
+                <div className="mt-4 flex items-center gap-2 border-t border-gray-100 pt-4 text-xs text-gray-400">
+                    <span className="h-1.5 w-1.5 rounded-full bg-mco-purple/40" />
                     Tap any session to see more details.
                 </div>
                 <button 
                     onClick={() => setShowInfo(false)}
-                    className="mt-6 w-full py-2 bg-mco-purple text-white rounded-lg font-medium"
+                    className="mt-6 w-full rounded-2xl bg-mco-purple py-3 text-sm font-semibold text-white shadow-[0_16px_30px_-18px_rgba(109,40,217,0.7)] transition-colors hover:bg-purple-700"
                 >
                     Close
                 </button>
+                </div>
             </div>
         </div>
       )}

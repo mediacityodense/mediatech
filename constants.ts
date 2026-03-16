@@ -433,6 +433,14 @@ export const SCHEDULE_DATA: DaySchedule[] = [
       },
 
       {
+        id: 'web-closing-2',
+        startTime: '17:30',
+        endTime: '17:45',
+        title: 'Round-up',
+        track: 'Main Stage',
+        isBreak: true
+        },
+      {
         id: 'wed-16',
         startTime: '18:00',
         endTime: '24:00',
@@ -440,14 +448,6 @@ export const SCHEDULE_DATA: DaySchedule[] = [
         track: 'Social',
         description: 'Free bar and light food sponsored by TV 2 Denmark & JFM. Please show your Mediatech Festival ticket for entry',
         location: 'Ryans Irish Pub, Fisketorvet 12, 5000 Odense'
-      },
-                {
-        id: 'web-closing-2',
-        startTime: '17:30',
-        endTime: '17:45',
-        title: 'Round-up',
-        track: 'Main Stage',
-        isBreak: true
       }
     ]
   },
@@ -639,7 +639,7 @@ export const SCHEDULE_DATA: DaySchedule[] = [
         startTime: '13:30',
         endTime: '14:00',
         title: 'TV 2 Norway streaming',
-        description: "",
+        description: "Can a local player win against global giants? Over the last few years, TV 2 Play has transformed its approach by focusing on what global players often miss: the daily rhythm and specific needs of the Norwegian people. Christian Birkeland shares the story of TV 2's journey from a traditional broadcaster to a more agile, product-driven organization. He explores the practical shifts that allow a local player to stay relevant— a curated experience where technology and business move in sync to bring people together in a fragmented digital world.",
         track: 'Main Stage',
         speakers: [{ 
             name: 'Christian Birkeland',
