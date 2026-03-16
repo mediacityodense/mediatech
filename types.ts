@@ -19,6 +19,7 @@ export interface Session {
   endTime?: string;
   title: string;
   description?: string;
+  detailsUrl?: string;
   track: TrackType;
   location?: string;
   speakers?: Speaker[];

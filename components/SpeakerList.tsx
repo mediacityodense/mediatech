@@ -46,7 +46,7 @@ const SpeakerList: React.FC<SpeakerListProps> = ({ scheduleData, onSpeakerClick 
     <div className="pt-4 pb-20 px-4 animate-in fade-in slide-in-from-right-4 duration-300">
       
       {/* Search Bar */}
-      <div className="sticky top-0 z-20 bg-[#F2F2F7]/95 backdrop-blur pb-4 pt-1">
+      <div className="sticky top-0 z-20 bg-[#F2F2F7]/92 backdrop-blur-xl pb-4 pt-1">
         <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Search size={16} className="text-gray-400" />
@@ -56,7 +56,7 @@ const SpeakerList: React.FC<SpeakerListProps> = ({ scheduleData, onSpeakerClick 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search speakers or companies..."
-                className="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mco-purple/50 focus:border-mco-purple transition-all sm:text-sm shadow-sm"
+                className="block w-full pl-10 pr-3 py-2.5 border border-gray-200/80 rounded-2xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mco-purple/40 focus:border-mco-purple/70 transition-all duration-300 sm:text-sm shadow-[0_12px_24px_-20px_rgba(15,23,42,0.18)] focus:shadow-[0_16px_28px_-18px_rgba(109,40,217,0.22)]"
             />
         </div>
       </div>
@@ -68,9 +68,9 @@ const SpeakerList: React.FC<SpeakerListProps> = ({ scheduleData, onSpeakerClick 
                 <button
                     key={`${speaker.name}-${idx}`}
                     onClick={() => onSpeakerClick(speaker)}
-                    className="flex flex-col items-center text-center bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-mco-purple/30 transition-all group"
+                    className="flex flex-col items-center text-center bg-[linear-gradient(180deg,#FFFFFF_0%,#FBFBFD_100%)] rounded-2xl p-4 shadow-[0_16px_30px_-24px_rgba(15,23,42,0.18)] border border-gray-100/90 hover:shadow-[0_18px_34px_-22px_rgba(15,23,42,0.22)] hover:border-mco-purple/20 hover:-translate-y-1 transition-all duration-300 active:scale-[0.98] group"
                 >
-                    <div className="w-20 h-20 rounded-full bg-gray-50 border border-gray-100 mb-3 overflow-hidden shrink-0 group-hover:scale-105 transition-transform duration-300">
+                    <div className="w-20 h-20 rounded-full bg-gray-50 border border-white mb-3 overflow-hidden shrink-0 group-hover:scale-105 transition-transform duration-300 shadow-[0_12px_22px_-18px_rgba(15,23,42,0.2)]">
                         {speaker.image ? (
                             <img 
                                 src={speaker.image} 

@@ -10,20 +10,22 @@ const TrackFilter: React.FC<TrackFilterProps> = ({ currentFilter, onFilterChange
   const filters: FilterType[] = ['All', 'Main Stage', 'Track 2', 'Networking'];
 
   return (
-    <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar px-4">
+    <div className="grid grid-cols-4 gap-1.5 px-1 py-0.5">
       {filters.map((filter) => (
         <button
           key={filter}
           onClick={() => onFilterChange(filter)}
           className={`
-            px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200
+            min-w-0 rounded-full px-1 py-1.5 text-[10px] font-semibold leading-tight transition-all duration-300 active:scale-95 sm:px-1.5 sm:py-2 sm:text-[11px]
             ${currentFilter === filter 
-              ? 'bg-mco-purple text-white shadow-md shadow-purple-200' 
-              : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+              ? 'bg-mco-purple text-white shadow-[0_14px_24px_-18px_rgba(109,40,217,0.75)]' 
+              : 'bg-white/90 text-gray-600 border border-gray-200/80 shadow-[0_10px_18px_-18px_rgba(15,23,42,0.18)] hover:bg-white hover:border-gray-300'
             }
           `}
         >
-          {filter}
+          <span className="flex min-h-[2rem] items-center justify-center text-center">
+            {filter}
+          </span>
         </button>
       ))}
     </div>

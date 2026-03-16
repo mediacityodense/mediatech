@@ -132,11 +132,11 @@ const App: React.FC = () => {
   })).filter(day => day.sessions.length > 0);
 
   return (
-    <div className="h-[100dvh] max-h-[100dvh] w-full max-w-md mx-auto bg-[#F2F2F7] shadow-2xl relative flex flex-col overflow-hidden overscroll-none">
+    <div className="h-[100dvh] max-h-[100dvh] w-full max-w-md mx-auto bg-[linear-gradient(180deg,#F7F7FB_0%,#F2F2F7_100%)] shadow-2xl relative flex flex-col overflow-hidden overscroll-none">
       
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md z-30 border-b border-gray-200 shrink-0">
-        <div className="px-4 py-2.5 flex justify-between items-center">
+      <header className="bg-white/85 backdrop-blur-xl z-30 border-b border-gray-200/80 shrink-0 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.18)]">
+        <div className="px-4 py-3 flex justify-between items-center">
             <div className="flex items-center gap-2.5">
                 <a
                   href="https://www.mediacityodense.dk/mediatech-festival-26/"
@@ -158,7 +158,7 @@ const App: React.FC = () => {
                     <h1 className="text-[15px] font-bold leading-tight tracking-[-0.01em] text-gray-900">
                       Mediatech Festival 2026
                     </h1>
-                    <div className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-[11px] leading-tight">
+                    <div className="mt-1 flex flex-wrap items-center gap-x-1.5 text-[11px] leading-tight">
                       <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-400">
                         Venue
                       </span>
@@ -172,7 +172,7 @@ const App: React.FC = () => {
                 {currentView === 'program' && (
                     <button 
                         onClick={() => setShowDashboard(!showDashboard)}
-                        className={`p-1.5 rounded-full transition-colors ${showDashboard ? 'bg-purple-50 text-mco-purple' : 'text-gray-400 hover:bg-gray-100'}`}
+                        className={`p-2 rounded-full transition-all duration-300 active:scale-95 ${showDashboard ? 'bg-purple-50 text-mco-purple shadow-[0_10px_20px_-16px_rgba(109,40,217,0.6)] hover:scale-105' : 'text-gray-400 hover:bg-gray-100 hover:scale-105'}`}
                         aria-label="Toggle Dashboard"
                     >
                         <LayoutDashboard size={19} />
@@ -180,14 +180,14 @@ const App: React.FC = () => {
                 )}
                 <button 
                   onClick={() => setShowBadge(true)}
-                  className="p-1.5 text-mco-purple hover:bg-purple-50 rounded-full transition-colors"
+                  className="p-2 text-mco-purple hover:bg-purple-50 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_20px_-16px_rgba(109,40,217,0.45)] active:scale-95"
                   aria-label="My Badge"
                 >
                     <QrCode size={22} />
                 </button>
                 <button 
                   onClick={() => setShowInfo(!showInfo)}
-                  className="p-1.5 text-mco-purple hover:bg-purple-50 rounded-full transition-colors"
+                  className="p-2 text-mco-purple hover:bg-purple-50 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_20px_-16px_rgba(109,40,217,0.45)] active:scale-95"
                   aria-label="App Info"
                 >
                     <Info size={22} />
@@ -197,22 +197,24 @@ const App: React.FC = () => {
 
         {/* Day Tabs - Only shown in Program View */}
         {currentView === 'program' && (
-          <div className="flex px-2 pt-1 pb-0 bg-white">
+          <div className="px-3 pb-2 bg-white">
+            <div className="flex rounded-2xl bg-[#F5F5FA] p-1 ring-1 ring-gray-200/70">
             {SCHEDULE_DATA.map((day, index) => (
               <button
                 key={day.date}
                 onClick={() => setActiveDayIndex(index)}
                 className={`
-                  flex-1 pb-3 pt-2 text-center relative transition-colors
-                  ${activeDayIndex === index ? 'text-mco-purple font-semibold' : 'text-gray-400 font-medium'}
+                  flex-1 rounded-xl pb-2.5 pt-2 text-center relative transition-all duration-300 active:scale-[0.98]
+                  ${activeDayIndex === index ? 'bg-white text-mco-purple font-semibold shadow-[0_10px_22px_-18px_rgba(15,23,42,0.35)]' : 'text-gray-400 font-medium'}
                 `}
               >
                 <span className="text-sm block">{day.shortLabel}</span>
                 {activeDayIndex === index && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-mco-purple rounded-t-full mx-4"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-mco-purple rounded-full mx-5"></div>
                 )}
               </button>
             ))}
+            </div>
           </div>
         )}
 
@@ -307,7 +309,7 @@ const App: React.FC = () => {
                 </div>
                 <button 
                     onClick={() => setShowInfo(false)}
-                    className="mt-6 w-full rounded-2xl bg-mco-purple py-3 text-sm font-semibold text-white shadow-[0_16px_30px_-18px_rgba(109,40,217,0.7)] transition-colors hover:bg-purple-700"
+                    className="mt-6 w-full rounded-2xl bg-mco-purple py-3 text-sm font-semibold text-white shadow-[0_16px_30px_-18px_rgba(109,40,217,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-[0_20px_34px_-18px_rgba(109,40,217,0.78)] active:translate-y-0 active:scale-[0.98]"
                 >
                     Close
                 </button>
@@ -352,7 +354,7 @@ const App: React.FC = () => {
              )}
 
              {/* Sticky Filter inside scroll container */}
-             <div className="sticky top-0 z-20 bg-[#F2F2F7]/95 backdrop-blur py-3 border-b border-gray-200/50 shadow-sm">
+             <div className="sticky top-0 z-20 bg-[#F2F2F7] py-1.5 border-b border-gray-200/50">
                <TrackFilter currentFilter={filter} onFilterChange={setFilter} />
              </div>
 
@@ -419,7 +421,7 @@ const App: React.FC = () => {
                     </p>
                     <button 
                        onClick={() => handleTabClick('program')}
-                       className="mt-8 px-6 py-2.5 bg-mco-purple text-white rounded-full font-medium text-sm shadow-lg shadow-purple-200 active:scale-95 transition-transform"
+                       className="mt-8 px-6 py-2.5 bg-mco-purple text-white rounded-full font-medium text-sm shadow-lg shadow-purple-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_28px_-18px_rgba(109,40,217,0.7)] active:scale-95"
                     >
                        Browse Program
                     </button>
@@ -442,21 +444,21 @@ const App: React.FC = () => {
       <nav className="shrink-0 bg-white border-t border-gray-200 flex justify-around items-center z-40 pb-safe shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.02)]">
          <button 
             onClick={() => handleTabClick('program')}
-            className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all active:scale-95 ${currentView === 'program' ? 'text-mco-purple' : 'text-gray-400 hover:text-gray-600'}`}
+            className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all duration-300 active:scale-95 ${currentView === 'program' ? 'text-mco-purple' : 'text-gray-400 hover:text-gray-600 hover:-translate-y-0.5'}`}
          >
             <List size={22} className={currentView === 'program' ? 'stroke-[2.5px]' : 'stroke-2'} />
             <span className="text-[10px] font-bold tracking-wide">Program</span>
          </button>
          <button 
             onClick={() => handleTabClick('favorites')}
-            className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all active:scale-95 ${currentView === 'favorites' ? 'text-mco-purple' : 'text-gray-400 hover:text-gray-600'}`}
+            className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all duration-300 active:scale-95 ${currentView === 'favorites' ? 'text-mco-purple' : 'text-gray-400 hover:text-gray-600 hover:-translate-y-0.5'}`}
          >
             <Heart size={22} fill={currentView === 'favorites' ? 'currentColor' : 'none'} className={currentView === 'favorites' ? 'stroke-none' : 'stroke-2'} />
             <span className="text-[10px] font-bold tracking-wide">My Schedule</span>
          </button>
          <button 
             onClick={() => handleTabClick('speakers')}
-            className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all active:scale-95 ${currentView === 'speakers' ? 'text-mco-purple' : 'text-gray-400 hover:text-gray-600'}`}
+            className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all duration-300 active:scale-95 ${currentView === 'speakers' ? 'text-mco-purple' : 'text-gray-400 hover:text-gray-600 hover:-translate-y-0.5'}`}
          >
             <Users size={22} className={currentView === 'speakers' ? 'stroke-[2.5px]' : 'stroke-2'} />
             <span className="text-[10px] font-bold tracking-wide">Speakers</span>

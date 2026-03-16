@@ -111,6 +111,7 @@ export const SCHEDULE_DATA: DaySchedule[] = [
         endTime: '16:00',
         title: 'AWS Boot Camp - Leveraging Agentic AI for Media - From Vision to Reality',
         description: "Deep dive workshop into cloud technologies for media - By special invitation, and not included in your Mediatech Festival ticket.\n\nAgenda for the Day:\n\n• 11:00 - 11:10: Welcome and Introduction\n• 11:10 - 12:15: Lighting Talks and Q&A\n• 12:15 - 13:15: Lunch & Networking\n• 13:15 - 14:45: Art of the Possible - Demo Presentations\n• 14:45 - 15:00: Break\n• 15:00 - 15:45: Interactive Session: Build your no-code Media AI Agent\n• 15:45 - 16:00: Closing Discussion and Q&A",
+        detailsUrl: 'https://aws-experience.com/emea/north/e/918a2/leveraging-agentic-ai-for-media-from-vision-to-reality',
         track: 'Workshop',
         location: 'G.A.S.A. Track 2 room',
         speakers: [{ name: 'AWS Team', company: 'Amazon Web Services', image: getSpeakerImage('AWS Team') }]

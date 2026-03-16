@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Session, Speaker } from '../types';
-import { Clock, MapPin, User, ChevronDown, ChevronUp, Star, ChevronRight, CalendarPlus, PartyPopper, Zap } from 'lucide-react';
+import { Clock, MapPin, User, ChevronDown, ChevronUp, Star, ChevronRight, CalendarPlus, PartyPopper, Zap, ExternalLink } from 'lucide-react';
 
 interface SessionCardProps {
   session: Session;
@@ -93,7 +93,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
     return (
       <div 
         id={`session-${session.id}`}
-        className="flex items-center justify-between py-3 px-4 bg-gray-50/50 rounded-lg mx-4 mb-3 border border-gray-100/80"
+        className="flex items-center justify-between py-3 px-4 bg-white/85 rounded-2xl mx-4 mb-3 border border-gray-100 shadow-[0_12px_24px_-22px_rgba(15,23,42,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-20px_rgba(15,23,42,0.22)]"
       >
         <div className="flex items-center gap-3">
           <Clock size={14} className="text-gray-400" />
@@ -112,7 +112,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
         <div className="mb-4 px-4" id={`session-${session.id}`}>
           <div 
             className={`
-              bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transition-all duration-200
+              bg-[linear-gradient(180deg,#FFFFFF_0%,#FBFBFD_100%)] rounded-2xl shadow-[0_18px_34px_-24px_rgba(15,23,42,0.24)] border border-gray-200/80 overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_38px_-22px_rgba(15,23,42,0.28)] active:scale-[0.995]
               ${isExpanded ? 'ring-2 ring-mco-purple/20' : ''}
             `}
           >
@@ -130,7 +130,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
                 <div className="flex items-center gap-1">
                      <button 
                         onClick={handleAddToCalendar}
-                        className="p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                        className="p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 hover:scale-105 active:scale-95"
                         aria-label="Add to Calendar"
                       >
                         <CalendarPlus size={18} />
@@ -140,7 +140,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
                           e.stopPropagation();
                           onToggleFavorite(session.id);
                         }}
-                        className="p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                        className="p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 hover:scale-105 active:scale-95"
                       >
                         <Star 
                           size={18} 
@@ -158,11 +158,11 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
              >
                 {/* Time Badge */}
                 <div className="flex items-center gap-2 mb-3">
-                   <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-600 font-mono bg-gray-100 px-2.5 py-1 rounded-md">
+                   <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-600 font-mono bg-gray-100 px-2.5 py-1 rounded-full">
                       <Clock size={12} />
                       {dayLabel} • {session.startTime} - {session.endTime}
                    </span>
-                   <span className="text-[10px] font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded border border-gray-100">
+                   <span className="text-[10px] font-bold text-gray-400 bg-white px-2 py-1 rounded-full border border-gray-100">
                       {duration} Hours
                    </span>
                 </div>
@@ -180,12 +180,25 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
                              <span className="text-sm font-semibold">{session.location}</span>
                           </div>
                       )}
-                      
-                      {session.description && (
-                         <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
-                            {session.description}
-                         </p>
-                      )}
+                       
+                       {session.description && (
+                          <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
+                             {session.description}
+                          </p>
+                       )}
+
+                       {session.detailsUrl && (
+                          <a
+                            href={session.detailsUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-100"
+                          >
+                            Full agenda overview
+                            <ExternalLink size={13} />
+                          </a>
+                       )}
                    </div>
                 )}
                 
@@ -201,7 +214,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
                                     e.stopPropagation();
                                     onSpeakerClick(s);
                                   }}
-                                  className="inline-flex items-center gap-2 px-2 py-1 bg-gray-50 border border-gray-200 rounded text-xs font-semibold text-gray-700 hover:bg-gray-100 transition-colors"
+                                  className="inline-flex items-center gap-2 px-2.5 py-1.5 bg-gray-50 border border-gray-200 rounded-full text-xs font-semibold text-gray-700 hover:bg-white transition-colors"
                                 >
                                    <span className="w-5 h-5 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden shrink-0">
                                      {s.image ? (
@@ -227,7 +240,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
     <div className="mb-4 px-4" id={`session-${session.id}`}>
       <div 
         className={`
-          bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-200
+          bg-[linear-gradient(180deg,#FFFFFF_0%,#FBFBFD_100%)] rounded-2xl shadow-[0_16px_30px_-24px_rgba(15,23,42,0.18)] border border-gray-100/90 overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_34px_-22px_rgba(15,23,42,0.22)] active:scale-[0.995]
           ${isExpanded ? 'ring-2 ring-mco-purple/10' : ''}
         `}
       >
@@ -235,7 +248,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
           
           {/* Header: Time & Actions */}
           <div className="flex justify-between items-start mb-3">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-600 font-mono bg-gray-100 px-2 py-1 rounded">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-600 font-mono bg-gray-100 px-2.5 py-1 rounded-full">
                 <Clock size={12} />
                 {isSocialEvent && <span className="text-mco-purple mr-1">{dayLabel} •</span>}
                 {session.startTime} - {session.endTime}
@@ -243,7 +256,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
             <div className="flex items-center gap-1 -mt-2 -mr-2">
                 <button 
                   onClick={handleAddToCalendar}
-                  className="p-2 text-gray-300 hover:text-mco-purple transition-colors focus:outline-none"
+                  className="p-2 text-gray-300 hover:text-mco-purple hover:bg-purple-50 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none"
                   aria-label="Add to Calendar"
                 >
                   <CalendarPlus size={20} />
@@ -253,7 +266,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
                     e.stopPropagation();
                     onToggleFavorite(session.id);
                   }}
-                  className="p-2 text-gray-300 hover:text-yellow-400 transition-colors focus:outline-none"
+                  className="p-2 text-gray-300 hover:text-yellow-400 hover:bg-yellow-50 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none"
                   aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
                 >
                   <Star 
@@ -277,14 +290,14 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
             
             {/* Track Label */}
             <div className="mb-4">
-                <span className={`text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-md ${getTrackLabelColor(session.track)}`}>
+                <span className={`text-[10px] uppercase tracking-wider font-bold px-2.5 py-1 rounded-full ${getTrackLabelColor(session.track)}`}>
                     {session.track}
                 </span>
             </div>
 
             {/* NEW: Prominent Location & Company Section */}
-            {(session.location || (session.speakers && session.speakers.length > 0)) && (
-               <div className="bg-gray-50 rounded-lg p-3 space-y-3 mb-2">
+             {(session.location || (session.speakers && session.speakers.length > 0)) && (
+                <div className="bg-gray-50/80 rounded-2xl p-3 space-y-3 mb-2 border border-gray-100">
                   
                   {/* Location */}
                   {session.location && (
@@ -310,7 +323,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
                                    e.stopPropagation(); // Prevent card expansion
                                    onSpeakerClick(speaker);
                                  }}
-                                 className="flex items-center gap-3 w-full text-left hover:bg-gray-100 p-1.5 -mx-1.5 rounded-lg transition-colors group"
+                                 className="flex items-center gap-3 w-full text-left hover:bg-white p-1.5 -mx-1.5 rounded-xl transition-all duration-300 group"
                                >
                                    <div className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[10px] font-bold text-gray-400 overflow-hidden shrink-0 shadow-sm">
                                       {speaker.image ? (
@@ -332,33 +345,46 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, isFavorite, onToggle
                                            </span>
                                        )}
                                    </div>
-                                   <ChevronRight size={14} className="text-gray-300 group-hover:text-mco-purple opacity-0 group-hover:opacity-100 transition-all" />
+                                   <ChevronRight size={14} className="text-gray-300 group-hover:text-mco-purple opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300" />
                                </button>
                            ))}
                       </div>
                   )}
-               </div>
-            )}
-            
-            {/* Description (Collapsible) */}
-            <div className={`
-              overflow-hidden transition-all duration-300 ease-in-out
-              ${isExpanded ? 'max-h-200 opacity-100 mt-3' : 'max-h-0 opacity-0'}
-            `}>
+                </div>
+             )}
+
+             {session.detailsUrl && (
+               <a
+                 href={session.detailsUrl}
+                 target="_blank"
+                 rel="noreferrer"
+                 onClick={(e) => e.stopPropagation()}
+                 className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-100"
+               >
+                 Full agenda overview
+                 <ExternalLink size={13} />
+               </a>
+             )}
+             
+             {/* Description (Collapsible) */}
+             <div className={`
+               overflow-hidden transition-all duration-300 ease-in-out
+               ${isExpanded ? 'max-h-200 opacity-100 mt-3' : 'max-h-0 opacity-0'}
+             `}>
                 <p className="text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-2 whitespace-pre-wrap">
                     {session.description || "No additional description available."}
                 </p>
-            </div>
+             </div>
 
             {/* Expand Hint */}
             {!isExpanded && (session.description) && (
                <div className="flex justify-center mt-1">
-                   <ChevronDown size={16} className="text-gray-300" />
+                   <ChevronDown size={16} className="text-gray-300 animate-[bounce_2s_ease-in-out_infinite]" />
                </div>
             )}
              {isExpanded && (
                <div className="flex justify-center mt-2">
-                   <ChevronUp size={16} className="text-gray-300" />
+                   <ChevronUp size={16} className="text-gray-300 transition-transform duration-300" />
                </div>
             )}
           </div>
