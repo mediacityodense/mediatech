@@ -10,7 +10,10 @@ import SponsorFooter from './components/SponsorFooter';
 import NewsletterSignup from './components/NewsletterSignup';
 import UpNextDashboard from './components/UpNextDashboard';
 import DigitalBadge from './components/DigitalBadge';
+import ConsentBanner from './components/ConsentBanner';
+import PrivacyPolicyModal from './components/PrivacyPolicyModal';
 import { resolveLogoAsset } from './logoAssets';
+import { AnalyticsConsent, denyAnalyticsConsent, getStoredAnalyticsConsent, grantAnalyticsConsent } from './analytics';
 import { FilterType, Speaker } from './types';
 import { Calendar, Info, Heart, List, Users, LayoutDashboard, QrCode, MapPin, ExternalLink, X } from 'lucide-react';
 
@@ -33,6 +36,9 @@ const App: React.FC = () => {
   const [selectedSpeaker, setSelectedSpeaker] = useState<Speaker | null>(null);
   const [currentView, setCurrentView] = useState<'program' | 'favorites' | 'speakers'>('program');
   const [showDashboard, setShowDashboard] = useState(true);
+  const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent | null>(() => getStoredAnalyticsConsent());
+  const [showConsentBanner, setShowConsentBanner] = useState(() => getStoredAnalyticsConsent() === null);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   
   const mainContentRef = useRef<HTMLDivElement>(null);
 
@@ -109,6 +115,28 @@ const App: React.FC = () => {
     } else {
       setCurrentView(view);
     }
+  };
+
+  const handleAcceptAnalytics = () => {
+    grantAnalyticsConsent();
+    setAnalyticsConsent('granted');
+    setShowConsentBanner(false);
+  };
+
+  const handleDeclineAnalytics = () => {
+    denyAnalyticsConsent();
+    setAnalyticsConsent('denied');
+    setShowConsentBanner(false);
+  };
+
+  const handleOpenPrivacySettings = () => {
+    setShowInfo(false);
+    setShowConsentBanner(true);
+  };
+
+  const handleOpenPrivacyPolicy = () => {
+    setShowInfo(false);
+    setShowPrivacyPolicy(true);
   };
 
   // Filter logic for Program View
@@ -307,6 +335,32 @@ const App: React.FC = () => {
                     <span className="h-1.5 w-1.5 rounded-full bg-mco-purple/40" />
                     Tap any session to see more details.
                 </div>
+                <div className="mt-4 rounded-[20px] border border-gray-100 bg-white/80 p-4">
+                    <div className="flex items-start justify-between gap-3">
+                        <div>
+                            <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-400">
+                                Privacy settings
+                            </div>
+                            <p className="mt-1 text-sm text-gray-600">
+                                Analytics is currently <span className="font-semibold text-gray-900">{analyticsConsent === 'granted' ? 'enabled' : 'disabled'}</span>.
+                            </p>
+                        </div>
+                        <div className="flex shrink-0 items-center gap-2">
+                            <button
+                                onClick={handleOpenPrivacyPolicy}
+                                className="rounded-full border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50"
+                            >
+                                Policy
+                            </button>
+                            <button
+                                onClick={handleOpenPrivacySettings}
+                                className="rounded-full border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50"
+                            >
+                                Manage
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <button 
                     onClick={() => setShowInfo(false)}
                     className="mt-6 w-full rounded-2xl bg-mco-purple py-3 text-sm font-semibold text-white shadow-[0_16px_30px_-18px_rgba(109,40,217,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-[0_20px_34px_-18px_rgba(109,40,217,0.78)] active:translate-y-0 active:scale-[0.98]"
@@ -464,6 +518,20 @@ const App: React.FC = () => {
             <span className="text-[10px] font-bold tracking-wide">Speakers</span>
          </button>
       </nav>
+
+      {showConsentBanner && (
+        <ConsentBanner
+          hasSavedChoice={analyticsConsent !== null}
+          onAccept={handleAcceptAnalytics}
+          onClose={analyticsConsent !== null ? () => setShowConsentBanner(false) : undefined}
+          onDecline={handleDeclineAnalytics}
+          onOpenPolicy={handleOpenPrivacyPolicy}
+        />
+      )}
+
+      {showPrivacyPolicy && (
+        <PrivacyPolicyModal onClose={() => setShowPrivacyPolicy(false)} />
+      )}
     </div>
   );
 };
