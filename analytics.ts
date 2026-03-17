@@ -6,7 +6,7 @@ const ANALYTICS_CONSENT_STORAGE_KEY = 'mco_analytics_consent';
 declare global {
   interface Window {
     __mcoAnalyticsConfigured?: boolean;
-    dataLayer: unknown[];
+    dataLayer: Array<IArguments | Record<string, unknown>>;
     gtag?: (...args: unknown[]) => void;
   }
 }
@@ -29,7 +29,8 @@ function ensureGtag() {
 
   if (!window.gtag) {
     window.gtag = function gtag(...args: unknown[]) {
-      window.dataLayer.push(args);
+      void args;
+      window.dataLayer.push(arguments);
     };
   }
 
@@ -110,7 +111,7 @@ export function grantAnalyticsConsent(shouldPersist = true) {
   }
 
   configureGoogleAnalytics();
-  trackPageView();
+  window.setTimeout(trackPageView, 0);
 }
 
 export function denyAnalyticsConsent(shouldPersist = true) {
