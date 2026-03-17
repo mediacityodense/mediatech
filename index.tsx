@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
+const GA_MEASUREMENT_ID = 'G-6WM1QDTX6Z';
+
 declare global {
   interface Window {
     dataLayer: unknown[];
@@ -10,19 +12,13 @@ declare global {
 }
 
 function injectGoogleAnalytics() {
-  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
-
-  if (!measurementId) {
-    return;
-  }
-
-  if (document.querySelector(`script[src*="${measurementId}"]`)) {
+  if (document.querySelector(`script[src*="${GA_MEASUREMENT_ID}"]`)) {
     return;
   }
 
   const gtagScript = document.createElement('script');
   gtagScript.async = true;
-  gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
   document.head.appendChild(gtagScript);
 
   window.dataLayer = window.dataLayer || [];
@@ -31,7 +27,7 @@ function injectGoogleAnalytics() {
   };
 
   window.gtag('js', new Date());
-  window.gtag('config', measurementId);
+  window.gtag('config', GA_MEASUREMENT_ID);
 }
 
 injectGoogleAnalytics();
