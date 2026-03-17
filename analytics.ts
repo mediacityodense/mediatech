@@ -2,6 +2,7 @@ export type AnalyticsConsent = 'granted' | 'denied';
 
 const GA_MEASUREMENT_ID = 'G-6WM1QDTX6Z';
 const ANALYTICS_CONSENT_STORAGE_KEY = 'mco_analytics_consent';
+let analyticsScriptPromise: Promise<void> | null = null;
 
 declare global {
   interface Window {
@@ -37,15 +38,41 @@ function ensureGtag() {
 }
 
 function injectGoogleAnalyticsScript() {
-  if (document.querySelector(`script[data-ga-id="${GA_MEASUREMENT_ID}"]`)) {
-    return;
+  const existingScript = document.querySelector<HTMLScriptElement>(`script[data-ga-id="${GA_MEASUREMENT_ID}"]`);
+
+  if (existingScript?.dataset.loaded === 'true') {
+    return Promise.resolve();
   }
 
-  const gtagScript = document.createElement('script');
-  gtagScript.async = true;
-  gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  gtagScript.dataset.gaId = GA_MEASUREMENT_ID;
-  document.head.appendChild(gtagScript);
+  if (analyticsScriptPromise) {
+    return analyticsScriptPromise;
+  }
+
+  analyticsScriptPromise = new Promise((resolve, reject) => {
+    const script = existingScript ?? document.createElement('script');
+
+    const handleLoad = () => {
+      script.dataset.loaded = 'true';
+      resolve();
+    };
+
+    const handleError = () => {
+      analyticsScriptPromise = null;
+      reject(new Error('Failed to load Google Analytics script.'));
+    };
+
+    script.addEventListener('load', handleLoad, { once: true });
+    script.addEventListener('error', handleError, { once: true });
+
+    if (!existingScript) {
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+      script.dataset.gaId = GA_MEASUREMENT_ID;
+      document.head.appendChild(script);
+    }
+  });
+
+  return analyticsScriptPromise;
 }
 
 function configureGoogleAnalytics() {
@@ -55,8 +82,17 @@ function configureGoogleAnalytics() {
 
   const gtag = ensureGtag();
   gtag('js', new Date());
-  gtag('config', GA_MEASUREMENT_ID);
+  gtag('config', GA_MEASUREMENT_ID, { send_page_view: false });
   window.__mcoAnalyticsConfigured = true;
+}
+
+function trackPageView() {
+  const gtag = ensureGtag();
+  gtag('event', 'page_view', {
+    page_location: window.location.href,
+    page_path: `${window.location.pathname}${window.location.search}`,
+    page_title: document.title,
+  });
 }
 
 export function getStoredAnalyticsConsent(): AnalyticsConsent | null {
@@ -88,11 +124,17 @@ export function grantAnalyticsConsent(shouldPersist = true) {
   }
 
   setAnalyticsDisabled(false);
-  injectGoogleAnalyticsScript();
 
   const gtag = ensureGtag();
   gtag('consent', 'update', getConsentState('granted'));
-  configureGoogleAnalytics();
+  void injectGoogleAnalyticsScript().then(() => {
+    if (window.__mcoAnalyticsConfigured) {
+      return;
+    }
+
+    configureGoogleAnalytics();
+    trackPageView();
+  });
 }
 
 export function denyAnalyticsConsent(shouldPersist = true) {
