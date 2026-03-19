@@ -60,7 +60,7 @@ const SPEAKER_IMAGE_MAP: Record<string, string> = {
   'Magnus Juul': '40.jpg',
   'Michael Dyrby': '53.jpg',
   'Kristoffer Hecquet': '2.jpg',
-  'Claudio Pica': '',
+  'Claudio Pica': 'Pica.jpg',
   'Dimitra Letsa': '60.jpg',
   'AWS Team': 'aws.png',
   'Michael Jensen': '55.jpg',
@@ -414,29 +414,31 @@ export const SCHEDULE_DATA: DaySchedule[] = [
         endTime: '16:45',
         title: 'A year of AI and Acquisitions',
         description: "The DPP is the pre-eminent network of senior media and technology leaders across Europe and North America. It has the privilege of working with almost 150 media companies and hundreds of their technology partners. So when it comes to trends, we spend a lot of time considering: whats essential, and whats just noise? In a year that's already set to be dominated by talk of mergers, acquisitions, and artificial intelligence, it's more important than ever to find clarity. So join Rowan for a light hearted look at some very serious topics, as he outlines the trends that really matter for media and technology.",
-        track: 'Track 2',
+        track: 'Main Stage',
         speakers: [
           { name: 'Rowan de Pomerai', company: 'DPP', role: 'CEO',bio:'Rowan has an MEng in Electronic Engineering with Media Technology from the University of York, and a strong background in media innovation, having started his career in BBC Research & Development. Since then he has delivered transformative change for some of the UK’s biggest broadcasters and producers, including architecting and deploying the BBC’s Automated QC solutions. He then joined ITV where he was Senior Technical Manager for ITV Studios, leading the Production Modernisation project to streamline the production process and ready the company for file-based delivery. Rowan de Pomerai is CEO at the DPP, the media industrys business network. The DPP is the place where customers and suppliers come together to solve problems and create opportunity; Rowan leads the DPPs technology strategy and delivery, driving a collaborative approach to solving real business problems across the media industry.', image: getSpeakerImage('Rowan de Pomerai') },
         ]
       },
-      
-      {
-        id: 'wed-85',
+       { id: 'thu-813',
         startTime: '16:45',
-        endTime: '17:30',
-        title: 'Designing for Billions: How Brands Stay Human at Scale',
-        description: "Simon Dixon and Aporva Baxi founded DixonBaxi, a global brand agency that has redefined how billions experience the worlds most iconic brands. For more than two decades they have partnered with industry leaders including Formula One, Netflix, Apple, Roblox, Google, Samsung, Warner Bros. Discovery and Hulu, creating brand systems and experiences that reach audiences across the world. Their work operates at an extraordinary scale, shaping how people connect with brands that define culture, technology, business and entertainment. DixonBaxi is known for its creative culture and belief in people as the driving force of progress. Ideas begin with curiosity, collaboration, conviction, the foundation of a studio that continues to redefine how creativity transforms business and culture globally.",
-        track: 'Main Stage',
-        speakers: [
-          { name: 'Simon Dixon', company: 'DixonBaxi', role: 'Co-Founder',bio:' The Co-Founder of DixonBaxi, a global brand agency. We create brand strategy, identities and design systems for some of the most iconic names in sport, entertainment, lifestyle, health, media and technology. Our work starts with people, with strategy and design working as one act of creativity to build brands people love and remember. We have worked with Delta Air Lines, AC Milan, Google, Headspace, Samsung, British Land, Roblox, Hulu, Netflix and Formula 1. Helping change how people feel about the brands in their lives. Three things guide everything we do. People. Creativity. Money. In that order.', image: getSpeakerImage('Simon Dixon') },
-          { name: 'Aporva Baxi', company: 'DixonBaxi', role: 'Co-Founder',bio:'The Co-Founder and ECD of DixonBaxi with my long-time business and creative partner Simon Dixon. We work with companies in moments of change, creating intelligent systems that make them clearer, more distinctive, and built for scale.Our collaborations range across culture, sport, entertainment, and technology, including Roblox, Formula One, ESPN, G42, Tubi, AC Milan, ITV, Amazon, IMAX, Eurosport, Audible, Netflix, British Land, MTV, and Samsung. We design identities that adapt and perform globally without losing their point of view.Alongside our work, we share our practice openly through initiatives like The DixonBaxi Way, Journeys, and our 500-page book, REMIX, making creativity more accessible to anyone, at any stage of their path.I’m proud to serve on the board of The One Club for Creativity and the Art Directors Club in New York, have judged the D&amp;AD Branding Jury, and often speak at events such as D&amp;AD and OFFF.Transformation should honour what makes a brand matter while giving it the intelligence and clarity to lead its next chapter.', image: getSpeakerImage('Aporva Baxi') }
-        ]
+        endTime: '17:15',
+        title: 'Building Sustainable Revenue in Rapidly Changing Markets',
+        description: 'Discover how FT Strategies uses real-world industry insights to help media organisations unlock sustainable revenue growth through smarter audience engagement and digital business models.',
+        track:  'Main Stage',
+        speakers: [{
+          name: 'Chloe Tsang',
+          role: 'Manager',
+          bio: 'At FT Strategies, Chloe works with organisations worldwide to grow recurring revenue, strengthen engagement and develop customer-centric digital products. Drawing on experience in content and UX design, journey mapping and newsroom workflows, she translates complex challenges into clear strategies and intuitive, accessible experiences, underpinned by strong qualitative and quantitative research skills and a deep understanding of how news organisations operate.',
+          company: 'FT Strategies',
+          image: getSpeakerImage('Chloe Tsang')
+        }]
       },
+      
 
       {
         id: 'web-closing-2',
-        startTime: '17:30',
-        endTime: '17:45',
+        startTime: '17:15',
+        endTime: '17:30',
         title: 'Round-up',
         track: 'Main Stage',
         isBreak: true
@@ -718,20 +720,6 @@ export const SCHEDULE_DATA: DaySchedule[] = [
             bio: 'CTO at Flimmer and plays a central role in developing the platform\'s technology. He previously spent over eight years with Too Good To Go.',
             company: 'Flimmer',
             image: getSpeakerImage('Magnus Juul')
-        }]
-      },
-      { id: 'thu-813',
-        startTime: '15:00',
-        endTime: '15:30',
-        title: 'Building Sustainable Revenue in Rapidly Changing Markets',
-        description: 'Discover how FT Strategies uses real-world industry insights to help media organisations unlock sustainable revenue growth through smarter audience engagement and digital business models.',
-        track:  'Track 2',
-        speakers: [{
-          name: 'Chloe Tsang',
-          role: 'Manager',
-          bio: 'At FT Strategies, Chloe works with organisations worldwide to grow recurring revenue, strengthen engagement and develop customer-centric digital products. Drawing on experience in content and UX design, journey mapping and newsroom workflows, she translates complex challenges into clear strategies and intuitive, accessible experiences, underpinned by strong qualitative and quantitative research skills and a deep understanding of how news organisations operate.',
-          company: 'FT Strategies',
-          image: getSpeakerImage('Chloe Tsang')
         }]
       },
       {
