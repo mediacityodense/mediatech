@@ -12,10 +12,14 @@ import UpNextDashboard from './components/UpNextDashboard';
 import DigitalBadge from './components/DigitalBadge';
 import ConsentBanner from './components/ConsentBanner';
 import PrivacyPolicyModal from './components/PrivacyPolicyModal';
+import TutorialVideoModal from './components/TutorialVideoModal';
 import { resolveLogoAsset } from './logoAssets';
 import { AnalyticsConsent, denyAnalyticsConsent, getStoredAnalyticsConsent, grantAnalyticsConsent } from './analytics';
 import { FilterType, Speaker } from './types';
-import { Calendar, Info, Heart, List, Users, LayoutDashboard, QrCode, MapPin, ExternalLink, X } from 'lucide-react';
+import { Calendar, Info, Heart, List, Users, LayoutDashboard, QrCode, MapPin, ExternalLink, PlayCircle, X } from 'lucide-react';
+import tutorialPromoVideo from './Images/mco_app_promo.mp4';
+
+const TUTORIAL_CARD_DISMISSED_STORAGE_KEY = 'mco_tutorial_card_dismissed';
 
 const App: React.FC = () => {
   const mcoLogo = resolveLogoAsset('mco1.png');
@@ -39,6 +43,10 @@ const App: React.FC = () => {
   const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent | null>(() => getStoredAnalyticsConsent());
   const [showConsentBanner, setShowConsentBanner] = useState(() => getStoredAnalyticsConsent() === null);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+  const [showTutorialVideo, setShowTutorialVideo] = useState(false);
+  const [showTutorialCard, setShowTutorialCard] = useState(
+    () => localStorage.getItem(TUTORIAL_CARD_DISMISSED_STORAGE_KEY) !== 'true'
+  );
   
   const mainContentRef = useRef<HTMLDivElement>(null);
 
@@ -139,6 +147,17 @@ const App: React.FC = () => {
     setShowPrivacyPolicy(true);
   };
 
+  const dismissTutorialCard = () => {
+    localStorage.setItem(TUTORIAL_CARD_DISMISSED_STORAGE_KEY, 'true');
+    setShowTutorialCard(false);
+  };
+
+  const handleOpenTutorialVideo = () => {
+    dismissTutorialCard();
+    setShowInfo(false);
+    setShowTutorialVideo(true);
+  };
+
   // Filter logic for Program View
   const currentDay = SCHEDULE_DATA[activeDayIndex];
   const filteredSessions = currentDay.sessions.filter(session => {
@@ -159,6 +178,16 @@ const App: React.FC = () => {
     sessions: day.sessions.filter(session => favorites.includes(session.id))
   })).filter(day => day.sessions.length > 0);
 
+  const floatingBannerOffsetClass = 'bottom-[15vh]';
+  const showFloatingTutorialCard = showTutorialCard
+    && currentView === 'program'
+    && !showConsentBanner
+    && !showInfo
+    && !showTutorialVideo
+    && !showBadge
+    && !selectedSpeaker
+    && !showPrivacyPolicy;
+ 
   return (
     <div className="h-[100dvh] max-h-[100dvh] w-full max-w-md mx-auto bg-[linear-gradient(180deg,#F7F7FB_0%,#F2F2F7_100%)] shadow-2xl relative flex flex-col overflow-hidden overscroll-none">
       
@@ -263,6 +292,7 @@ const App: React.FC = () => {
 
       {/* Info Modal/Overlay */}
       {showInfo && (
+        
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/45 backdrop-blur-md" onClick={() => setShowInfo(false)}>
             <div className="max-w-sm w-full overflow-hidden rounded-[30px] border border-white/70 bg-white/95 shadow-[0_28px_80px_-28px_rgba(15,23,42,0.45)] ring-1 ring-black/5 animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
                 <div className="relative overflow-hidden border-b border-gray-100/80 bg-[linear-gradient(180deg,rgba(248,245,255,0.95)_0%,rgba(255,255,255,0.92)_100%)] px-5 pb-4 pt-4">
@@ -274,7 +304,7 @@ const App: React.FC = () => {
                             <div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-mco-purple/60">
                                 Mediatech Festival
                             </div>
-                            <h2 className="text-xl font-bold text-mco-purple">About</h2>
+                            <h2 className="text-xl font-bold text-mco-purple">Information</h2>
                         </div>
                         <button
                             onClick={() => setShowInfo(false)}
@@ -285,6 +315,7 @@ const App: React.FC = () => {
                         </button>
                     </div>
                 </div>
+                
                 <div className="px-5 pb-5 pt-4">
                 <a
                     href={venueMapUrl}
@@ -322,19 +353,38 @@ const App: React.FC = () => {
                         </span>
                     </span>
                 </a>
-                <div className="rounded-[22px] border border-gray-100 bg-[linear-gradient(180deg,#FFFFFF_0%,#F8FAFC_100%)] p-4 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.28)]">
-                <p className="text-gray-600 text-sm leading-relaxed mb-0">
-                    Official schedule app for Mediatech Festival 2026.
-                    <br/><br/>
-                    <strong>Media City Odense</strong><br/>
-                    March 25-26, 2026<br/>
-                    Odense, Denmark
-                </p>
-                </div>
-                <div className="mt-4 flex items-center gap-2 border-t border-gray-100 pt-4 text-xs text-gray-400">
-                    <span className="h-1.5 w-1.5 rounded-full bg-mco-purple/40" />
-                    Tap any session to see more details.
-                </div>
+
+                <button
+                    onClick={handleOpenTutorialVideo}
+                    className="group mt-4 block w-full overflow-hidden rounded-[22px] bg-gradient-to-br from-[#1D4ED8] via-[#2563EB] to-[#0F172A] p-px text-left shadow-[0_18px_40px_-24px_rgba(37,99,235,0.5)] transition-all hover:-translate-y-0.5 hover:shadow-[0_22px_48px_-24px_rgba(37,99,235,0.58)]"
+                >
+                    <span className="relative block rounded-[21px] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.22),transparent_42%),linear-gradient(135deg,rgba(37,99,235,0.96)_0%,rgba(15,23,42,0.96)_100%)] px-3.5 py-3.5 text-white sm:px-4 sm:py-4">
+                        <span className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-white/12 blur-2xl" />
+                        <span className="absolute bottom-0 left-0 h-16 w-24 bg-gradient-to-tr from-white/12 to-transparent blur-2xl" />
+                        <span className="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                            <span className="flex min-w-0 items-start gap-2.5 sm:gap-3">
+                                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[16px] bg-white/14 text-white ring-1 ring-white/20 backdrop-blur-sm sm:h-11 sm:w-11 sm:rounded-[18px]">
+                                    <PlayCircle size={18} className="sm:h-5 sm:w-5" />
+                                </span>
+                                <span className="min-w-0">
+                                    <span className="inline-flex items-center rounded-full bg-white/14 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.16em] text-white/80 ring-1 ring-white/15 sm:text-[9px]">
+                                        Tutorial video
+                                    </span>
+                                    <span className="mt-1.5 block text-base font-semibold leading-tight tracking-[-0.02em] text-white sm:text-[17px]">
+                                        How to use the web app
+                                    </span>
+                                    <span className="mt-0.5 block text-xs leading-relaxed text-white/78 sm:text-[13px]">
+                                        Watch the walkthrough anytime from here.
+                                    </span>
+                                </span>
+                            </span>
+                            <span className="inline-flex self-start rounded-full bg-white/14 px-3 py-1 text-[11px] font-semibold text-white/88 ring-1 ring-white/20 transition-colors group-hover:bg-white/18 sm:self-auto">
+                                Watch
+                            </span>
+                        </span>
+                    </span>
+                </button>
+                
                 <div className="mt-4 rounded-[20px] border border-gray-100 bg-white/80 p-4">
                     <div className="flex items-start justify-between gap-3">
                         <div>
@@ -519,8 +569,50 @@ const App: React.FC = () => {
          </button>
       </nav>
 
+      {showFloatingTutorialCard && (
+        <div className={`fixed inset-x-0 z-[68] px-4 ${floatingBannerOffsetClass}`}>
+          <div className="mx-auto max-w-sm">
+            <div className="relative overflow-hidden rounded-[26px] border border-[#DBEAFE] bg-[radial-gradient(circle_at_top_left,rgba(191,219,254,0.7),transparent_38%),linear-gradient(135deg,#FFFFFF_0%,#EFF6FF_55%,#F8FAFC_100%)] p-4 shadow-[0_18px_36px_-28px_rgba(37,99,235,0.34)]">
+              <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-blue-200/40 blur-2xl" />
+              <div className="relative">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-700 ring-1 ring-blue-100">
+                      First visit
+                    </div>
+                    <h3 className="mt-2 text-base font-bold tracking-[-0.02em] text-gray-900">
+                      New here? Watch the app tutorial
+                    </h3>
+                    <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                      Quick video tour of the program, favorites, badge, and speaker views.
+                    </p>
+                  </div>
+
+                </div>
+                <div className="mt-4 flex items-center gap-2">
+                  <button
+                    onClick={handleOpenTutorialVideo}
+                    className="inline-flex items-center gap-2 rounded-2xl bg-[#2563EB] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_16px_28px_-20px_rgba(37,99,235,0.72)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1D4ED8] active:scale-[0.98]"
+                  >
+                    <PlayCircle size={16} />
+                    Watch tutorial
+                  </button>
+                  <button
+                    onClick={dismissTutorialCard}
+                    className="rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-gray-300 hover:bg-gray-50 active:scale-[0.98]"
+                  >
+                    Maybe later
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showConsentBanner && (
         <ConsentBanner
+          className={floatingBannerOffsetClass}
           hasSavedChoice={analyticsConsent !== null}
           onAccept={handleAcceptAnalytics}
           onClose={analyticsConsent !== null ? () => setShowConsentBanner(false) : undefined}
@@ -532,6 +624,12 @@ const App: React.FC = () => {
       {showPrivacyPolicy && (
         <PrivacyPolicyModal onClose={() => setShowPrivacyPolicy(false)} />
       )}
+
+      <TutorialVideoModal
+        isOpen={showTutorialVideo}
+        onClose={() => setShowTutorialVideo(false)}
+        videoSrc={tutorialPromoVideo}
+      />
     </div>
   );
 };

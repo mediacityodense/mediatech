@@ -2,6 +2,7 @@ import React from 'react';
 import { ShieldCheck } from 'lucide-react';
 
 interface ConsentBannerProps {
+  className?: string;
   hasSavedChoice: boolean;
   onAccept: () => void;
   onClose?: () => void;
@@ -10,6 +11,7 @@ interface ConsentBannerProps {
 }
 
 const ConsentBanner: React.FC<ConsentBannerProps> = ({
+  className,
   hasSavedChoice,
   onAccept,
   onClose,
@@ -17,10 +19,11 @@ const ConsentBanner: React.FC<ConsentBannerProps> = ({
   onOpenPolicy,
 }) => {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[70] px-4 pb-3">
+    <div className={`fixed inset-x-0 z-[70] px-4 ${className ?? 'bottom-0 pb-3'}`}>
       <div className="mx-auto w-full max-w-sm overflow-hidden rounded-[24px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(247,247,251,0.98)_100%)] shadow-[0_22px_52px_-30px_rgba(15,23,42,0.38)] ring-1 ring-black/5 backdrop-blur-xl">
         <div className="relative overflow-hidden px-4 pb-4 pt-3.5">
-          <div className="absolute right-0 top-0 h-20 w-20 rounded-full bg-mco-purple/10 blur-2xl" />
+          <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-r from-mco-purple/10 via-sky-200/20 to-mco-purple/10" />
+          <div className="absolute right-0 top-0 h-20 w-20 rounded-full bg-mco-purple/12 blur-2xl" />
           <div className="absolute bottom-0 left-0 h-16 w-24 bg-gradient-to-tr from-mco-purple/10 to-transparent blur-2xl" />
           <div className="relative">
             <div className="mb-2.5 flex items-start gap-3">
