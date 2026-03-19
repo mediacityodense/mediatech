@@ -414,7 +414,7 @@ export const SCHEDULE_DATA: DaySchedule[] = [
         endTime: '16:45',
         title: 'A year of AI and Acquisitions',
         description: "The DPP is the pre-eminent network of senior media and technology leaders across Europe and North America. It has the privilege of working with almost 150 media companies and hundreds of their technology partners. So when it comes to trends, we spend a lot of time considering: whats essential, and whats just noise? In a year that's already set to be dominated by talk of mergers, acquisitions, and artificial intelligence, it's more important than ever to find clarity. So join Rowan for a light hearted look at some very serious topics, as he outlines the trends that really matter for media and technology.",
-        track: 'Track 2',
+        track: 'Main Stage',
         speakers: [
           { name: 'Rowan de Pomerai', company: 'DPP', role: 'CEO',bio:'Rowan has an MEng in Electronic Engineering with Media Technology from the University of York, and a strong background in media innovation, having started his career in BBC Research & Development. Since then he has delivered transformative change for some of the UK’s biggest broadcasters and producers, including architecting and deploying the BBC’s Automated QC solutions. He then joined ITV where he was Senior Technical Manager for ITV Studios, leading the Production Modernisation project to streamline the production process and ready the company for file-based delivery. Rowan de Pomerai is CEO at the DPP, the media industrys business network. The DPP is the place where customers and suppliers come together to solve problems and create opportunity; Rowan leads the DPPs technology strategy and delivery, driving a collaborative approach to solving real business problems across the media industry.', image: getSpeakerImage('Rowan de Pomerai') },
         ]
@@ -424,7 +424,7 @@ export const SCHEDULE_DATA: DaySchedule[] = [
         endTime: '17:15',
         title: 'Building Sustainable Revenue in Rapidly Changing Markets',
         description: 'Discover how FT Strategies uses real-world industry insights to help media organisations unlock sustainable revenue growth through smarter audience engagement and digital business models.',
-        track:  'Track 2',
+        track:  'Main Stage',
         speakers: [{
           name: 'Chloe Tsang',
           role: 'Manager',
