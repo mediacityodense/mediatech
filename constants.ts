@@ -624,7 +624,7 @@ export const SCHEDULE_DATA: DaySchedule[] = [
         speakers: [{ 
             name: 'Märta Rydbeck',
             company: 'RISE',
-            role: 'Rise Mentor',
+            role: 'Head of Nordic Chapter',
             bio:'Märta Rydbeck is Head of Rise, Women in Broadcast, in the Nordics and a senior commercial and business development leader with more than 25 years of international experience. She has held executive roles across corporate organisations, scale-ups and technology-driven businesses, including regional leadership positions at Eurosport, TV4 and Ericsson, as well as advisory and interim roles in SaaS and digital services companies. Märta works at the intersection of leadership, transformation, and commercial strategy, and is passionate about building inclusive, high-performing organisations. Through her role at Rise, she is committed to supporting womens career development and strengthening diverse leadership across the broadcast and media ecosystem.',
             image: getSpeakerImage('Marta Rydbeck')
         }]
