@@ -20,8 +20,76 @@ import { Calendar, Info, Heart, List, Users, LayoutDashboard, QrCode, MapPin, Ex
 import tutorialPromoVideo from './Images/mco_app_promo.mp4';
 
 const TUTORIAL_CARD_DISMISSED_STORAGE_KEY = 'mco_tutorial_card_dismissed';
+const FESTIVAL_WEBSITE_URL = 'https://www.mediacityodense.dk/mediatech-festival-26/';
 
-const App: React.FC = () => {
+// Switch back to 'live' when you want to reopen the full web app for the next festival.
+const SITE_MODE: 'live' | 'post-event' = 'post-event';
+
+const PostEventScreen: React.FC = () => {
+  const mcoLogo = resolveLogoAsset('mco1.png');
+
+  useEffect(() => {
+    document.title = 'MediaTech Festival | See You Next Year';
+  }, []);
+
+  return (
+    <div className="relative min-h-[100dvh] overflow-hidden bg-[#F5F3FF] text-gray-900">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#FFFFFF_0%,#F8F4FF_38%,#EEE8FF_100%)]" />
+      <div className="absolute -left-24 top-0 h-72 w-72 rounded-full bg-mco-purple/14 blur-3xl" />
+      <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-[#CCFF00]/18 blur-3xl" />
+
+      <main className="relative mx-auto flex min-h-[100dvh] max-w-5xl items-center px-5 py-10 sm:px-8">
+        <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-[32px] border border-white/70 bg-white/85 shadow-[0_36px_110px_-42px_rgba(76,29,149,0.45)] backdrop-blur-xl">
+          <div className="relative overflow-hidden px-6 pb-8 pt-10 sm:px-10 sm:pb-10 sm:pt-12">
+            <div className="absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_top,rgba(138,92,245,0.18),transparent_70%)]" />
+            <div className="absolute right-0 top-0 h-32 w-32 translate-x-10 -translate-y-10 rounded-full bg-mco-purple/10 blur-3xl" />
+
+            <div className="relative text-center">
+              <div className="inline-flex items-center rounded-full border border-mco-purple/15 bg-mco-purple/8 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-mco-purple">
+                Mediatech Festival 2026
+              </div>
+
+              <img
+                src={mcoLogo}
+                alt="Media City Odense"
+                className="mx-auto mt-6 h-16 w-auto object-contain sm:h-20"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+
+              <h1 className="mx-auto mt-8 max-w-2xl text-4xl font-extrabold tracking-[-0.04em] text-gray-950 sm:text-5xl">
+                Thank you to all who attended MediaTech Festival 2026!
+              </h1>
+
+              <div className="mx-auto mt-5 max-w-2xl text-base leading-8 text-gray-600 sm:text-lg">
+                <span className="block">See you next year</span>
+                <span className="mt-3 inline-flex rounded-full border border-mco-purple/15 bg-[linear-gradient(135deg,rgba(138,92,245,0.12)_0%,rgba(255,255,255,0.98)_55%,rgba(204,255,0,0.22)_100%)] px-5 py-3 text-lg font-extrabold tracking-[-0.02em] text-mco-purple shadow-[0_20px_34px_-24px_rgba(109,40,217,0.55)] sm:text-xl">
+                  March 17-18, 2027
+                </span>
+
+              </div>
+
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <a
+                  href={FESTIVAL_WEBSITE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-mco-purple px-6 py-3 text-sm font-semibold text-white shadow-[0_20px_36px_-24px_rgba(109,40,217,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-purple-700 active:translate-y-0 active:scale-[0.98]"
+                >
+                  Media City Odense
+                  <ExternalLink size={16} />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+const LiveFestivalApp: React.FC = () => {
   const mcoLogo = resolveLogoAsset('mco1.png');
   const venueMapUrl = 'https://www.google.com/maps/search/?api=1&query=Middelfartvej+9M%2C+5000+Odense';
   const [activeDayIndex, setActiveDayIndex] = useState<number>(() => {
@@ -196,7 +264,7 @@ const App: React.FC = () => {
         <div className="px-4 py-3 flex justify-between items-center">
             <div className="flex items-center gap-2.5">
                 <a
-                  href="https://www.mediacityodense.dk/mediatech-festival-26/"
+                  href={FESTIVAL_WEBSITE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Open Mediatech Festival website"
@@ -632,6 +700,14 @@ const App: React.FC = () => {
       />
     </div>
   );
+};
+
+const App: React.FC = () => {
+  if (SITE_MODE === 'post-event') {
+    return <PostEventScreen />;
+  }
+
+  return <LiveFestivalApp />;
 };
 
 export default App;
