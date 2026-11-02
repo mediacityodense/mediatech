@@ -20,7 +20,7 @@ import { Calendar, Info, Heart, List, Users, LayoutDashboard, QrCode, MapPin, Ex
 import tutorialPromoVideo from './Images/mco_app_promo.mp4';
 
 const TUTORIAL_CARD_DISMISSED_STORAGE_KEY = 'mco_tutorial_card_dismissed';
-const FESTIVAL_WEBSITE_URL = 'https://www.mediacityodense.dk/mediatech-festival-26/';
+const FESTIVAL_WEBSITE_URL = 'https://www.mediacityodense.dk/mediatech-festival-27/';
 
 // Switch back to 'live' when you want to reopen the full web app for the next festival.
 const SITE_MODE: 'live' | 'post-event' = 'post-event';
